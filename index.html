@@ -1,1 +1,1571 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Biye Bazar - by Ankush Mandal</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f7fb;color:#222;padding-bottom:72px}
+button{border:0;cursor:pointer}
+.page{display:none}
+.page.active{display:block}
+
+.header{
+background:#0878e8;color:white;padding:14px 15px 17px;
+border-radius:0 0 20px 20px
+}
+.top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:21px;font-weight:bold}
+.brand{font-size:10px;margin-top:3px;opacity:.9}
+.top-icons{display:flex;gap:17px}
+.top-icon{font-size:22px;position:relative}
+.badge{
+position:absolute;top:-8px;right:-9px;width:17px;height:17px;
+border-radius:50%;background:#ff3b30;color:white;font-size:9px;
+display:flex;align-items:center;justify-content:center
+}
+
+.search{
+margin-top:14px;background:white;border-radius:12px;
+padding:11px 13px;display:flex;gap:8px;align-items:center
+}
+.search input{width:100%;border:0;outline:0;font-size:14px}
+
+.location{
+margin-top:12px;font-size:12px;display:flex;gap:6px;
+align-items:center
+}
+
+.container{padding:14px}
+.section-title{
+display:flex;align-items:center;justify-content:space-between;
+margin:8px 0 12px
+}
+.section-title h3{font-size:17px}
+.section-title span{font-size:12px;color:#0878e8}
+
+/* CATEGORY SWIPE */
+.category-scroll{
+display:flex;gap:14px;width:100%;overflow-x:auto;
+overflow-y:hidden;padding:4px 2px 12px;
+scrollbar-width:none;-webkit-overflow-scrolling:touch;
+touch-action:pan-x;overscroll-behavior-x:contain
+}
+.category-scroll::-webkit-scrollbar{display:none}
+.cat{
+flex:0 0 72px;width:72px;text-align:center;
+user-select:none;cursor:pointer
+}
+.cat-icon{
+width:58px;height:58px;margin:auto;border-radius:50%;
+background:white;border:1px solid #e0e6ee;
+box-shadow:0 3px 10px #00000012;
+display:flex;align-items:center;justify-content:center;font-size:27px
+}
+.cat span{
+display:block;margin-top:7px;font-size:10px;white-space:nowrap
+}
+
+/* OFFER */
+.offer-scroll{
+display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;
+scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch
+}
+.offer-scroll::-webkit-scrollbar{display:none}
+.offer{
+flex:0 0 88%;height:145px;border-radius:17px;padding:18px;
+color:white;scroll-snap-align:start;
+display:flex;flex-direction:column;justify-content:center;
+background:linear-gradient(135deg,#0878e8,#0053b8)
+}
+.offer:nth-child(2){background:linear-gradient(135deg,#7b2cff,#411080)}
+.offer:nth-child(3){background:linear-gradient(135deg,#ff7900,#e53c00)}
+.offer h2{font-size:22px}
+.offer p{font-size:12px;margin:7px 0 12px}
+.offer button{
+width:max-content;padding:8px 15px;border-radius:20px;
+background:white;color:#0878e8;font-weight:bold
+}
+
+/* FILTER */
+.filters{
+display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+margin-bottom:14px
+}
+.filters::-webkit-scrollbar{display:none}
+.filter{
+flex:0 0 auto;background:white;border:1px solid #e0e5eb;
+border-radius:20px;padding:8px 14px;font-size:11px
+}
+
+/* SERVICES */
+.service-grid{
+display:grid;grid-template-columns:1fr 1fr;gap:12px
+}
+.card{
+background:white;border-radius:14px;overflow:hidden;
+box-shadow:0 3px 12px #00000010
+}
+.card-img{
+height:115px;background:#eaf3ff;
+display:flex;align-items:center;justify-content:center;font-size:50px
+}
+.card-body{padding:10px}
+.card-body h4{font-size:13px;margin-bottom:5px}
+.card-body p{font-size:10px;color:#777;min-height:25px}
+.price{color:#0878e8;font-weight:bold;font-size:13px;margin:7px 0}
+.book{
+width:100%;background:#0878e8;color:white;
+padding:9px;border-radius:8px;font-size:11px;font-weight:bold
+}
+.wish-btn{
+width:100%;background:white;color:#0878e8;padding:7px;font-size:11px
+}
+
+/* FORM */
+.form-box{
+background:white;padding:18px;border-radius:17px;
+box-shadow:0 3px 12px #0000000d
+}
+.form-box h2{margin-bottom:8px}
+.form-box label{
+display:block;font-size:12px;font-weight:bold;margin-top:13px
+}
+.form-box input,.form-box textarea{
+width:100%;padding:12px;margin-top:6px;
+border:1px solid #ddd;border-radius:9px;outline:none
+}
+.form-box textarea{min-height:80px;resize:none}
+.confirm-btn{
+width:100%;padding:13px;margin-top:18px;
+background:#0878e8;color:white;border-radius:10px;font-weight:bold
+}
+
+/* DETAIL */
+.back-btn{
+background:white;padding:9px 14px;border-radius:20px;margin-bottom:12px
+}
+.detail-box{
+background:white;border-radius:18px;padding:18px;
+box-shadow:0 3px 12px #00000010
+}
+.detail-icon{
+height:180px;border-radius:15px;background:#eaf3ff;
+display:flex;align-items:center;justify-content:center;
+font-size:80px;margin-bottom:15px
+}
+
+/* VALIDATION MESSAGE */
+.message-box{
+display:none;
+margin-top:12px;
+padding:13px;
+border-radius:10px;
+background:#fff3f3;
+border:1px solid #ffcaca;
+color:#b42318;
+font-size:12px;
+line-height:1.5
+}
+.message-box.show{display:block}
+
+/* SUCCESS */
+.success-page{
+min-height:calc(100vh - 72px);
+background:linear-gradient(180deg,#0caf55,#07863f);
+color:white;display:none;align-items:center;
+justify-content:center;text-align:center;padding:20px
+}
+.success-page.active{display:flex}
+.success-card{width:100%;max-width:390px}
+.success-tick{
+width:105px;height:105px;margin:0 auto 20px;
+border-radius:50%;background:white;color:#0aa94f;
+display:flex;align-items:center;justify-content:center;
+font-size:66px;font-weight:bold;
+box-shadow:0 8px 25px #00000025
+}
+.success-card h1{font-size:25px;margin-bottom:9px}
+.success-card h2{font-size:19px;margin-bottom:8px}
+.success-card p{font-size:13px}
+.success-info{
+margin:20px 0;padding:15px;border-radius:14px;
+background:#ffffff18;border:1px solid #ffffff35;text-align:left
+}
+.success-info div{
+display:flex;justify-content:space-between;
+padding:7px 0;font-size:12px
+}
+.success-buttons{display:flex;gap:10px}
+.success-buttons button{
+flex:1;padding:12px;border-radius:10px;font-weight:bold
+}
+.home-success{background:white;color:#07863f}
+.orders-success{background:#056c34;color:white}
+
+/* ORDERS */
+.order{
+background:white;padding:15px;border-radius:15px;
+margin-bottom:12px;box-shadow:0 3px 12px #0000000d
+}
+.order-title{
+display:flex;justify-content:space-between;
+align-items:center;margin-bottom:9px
+}
+.order-title h3{font-size:14px}
+.order-id{font-size:10px;color:#777}
+.order-row{font-size:11px;color:#555;padding:4px 0}
+
+/* ORDER TRACKING */
+.order-status{
+margin-top:14px;padding-top:12px;border-top:1px solid #eee
+}
+.status-title{font-size:12px;font-weight:bold;margin-bottom:10px}
+.status-line{display:flex;position:relative}
+.status-step{
+flex:1;text-align:center;position:relative;
+font-size:9px;color:#999
+}
+.status-circle{
+width:27px;height:27px;border-radius:50%;
+margin:auto;background:#e2e5e8;color:white;
+display:flex;align-items:center;justify-content:center;
+font-size:12px;position:relative;z-index:2
+}
+.status-step.active .status-circle{background:#0aa94f}
+.status-step.active{color:#0aa94f;font-weight:bold}
+.status-step:not(:last-child)::after{
+content:"";position:absolute;top:13px;left:50%;
+width:100%;height:3px;background:#e2e5e8;z-index:1
+}
+.status-step.active:not(:last-child)::after{background:#0aa94f}
+.status-step span{display:block;margin-top:5px}
+
+.empty{
+background:white;border-radius:15px;padding:40px 15px;
+text-align:center;color:#777
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+position:fixed;bottom:0;left:0;right:0;height:68px;
+background:white;border-top:1px solid #ddd;
+display:flex;justify-content:space-around;
+align-items:center;z-index:1000
+}
+.nav-item{text-align:center;font-size:10px;color:#777}
+.nav-item div{font-size:21px;margin-bottom:3px}
+.nav-item.active{color:#0878e8;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div id="homePage" class="page active">
+
+<header class="header">
+
+<div class="top">
+
+<div>
+<div class="logo">💍 Biye Bazar</div>
+<div class="brand">by Ankush Mandal</div>
+</div>
+
+<div class="top-icons">
+
+<div class="top-icon"
+onclick="showPage('wishlistPage')">♡</div>
+
+<div class="top-icon"
+onclick="showPage('cartPage')">
+
+🛒
+<span id="cartBadge" class="badge">0</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="search">
+🔍
+<input id="searchInput"
+placeholder="Search wedding services..."
+oninput="searchServices()">
+</div>
+
+<div class="location"
+onclick="showPage('locationPage')">
+
+📍
+<span id="locationText">Ratua - 732205</span>
+›
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="section-title">
+<h3>Categories</h3>
+<span>Swipe →</span>
+</div>
+
+<!-- CATEGORY SWIPE + CLICK -->
+
+<div class="category-scroll" id="categoryScroll">
+
+<div class="cat"
+onclick="filterCategory('All Services')">
+<div class="cat-icon">🛍️</div>
+<span>All</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Photography')">
+<div class="cat-icon">📸</div>
+<span>Photography</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('DJ & Sound')">
+<div class="cat-icon">🎵</div>
+<span>DJ & Sound</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Tent & Pandal')">
+<div class="cat-icon">⛺</div>
+<span>Tent</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Car Rental')">
+<div class="cat-icon">🚗</div>
+<span>Car</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Decoration')">
+<div class="cat-icon">🌸</div>
+<span>Decoration</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Catering')">
+<div class="cat-icon">🍽️</div>
+<span>Catering</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Lighting')">
+<div class="cat-icon">💡</div>
+<span>Lighting</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Furniture')">
+<div class="cat-icon">🪑</div>
+<span>Furniture</span>
+</div>
+
+<div class="cat"
+onclick="filterCategory('Makeup')">
+<div class="cat-icon">💄</div>
+<span>Makeup</span>
+</div>
+
+</div>
+
+
+<div class="section-title">
+<h3>Wedding Deals</h3>
+<span onclick="showPage('dealsPage')">View All</span>
+</div>
+
+
+<div class="offer-scroll">
+
+<div class="offer">
+<h2>Wedding Special</h2>
+<p>Photography & Decoration Services</p>
+<button onclick="showPage('dealsPage')">
+View Offers
+</button>
+</div>
+
+<div class="offer">
+<h2>DJ & Sound</h2>
+<p>Make your event memorable</p>
+<button onclick="filterCategory('DJ & Sound')">
+Explore
+</button>
+</div>
+
+<div class="offer">
+<h2>Wedding Car</h2>
+<p>Premium wedding car booking</p>
+<button onclick="filterCategory('Car Rental')">
+Book Now
+</button>
+</div>
+
+</div>
+
+
+<div class="section-title" style="margin-top:20px">
+<h3>Recommended Services</h3>
+<span>See All</span>
+</div>
+
+
+<div class="filters">
+
+<button class="filter"
+onclick="filterCategory('All Services')">All</button>
+
+<button class="filter"
+onclick="filterCategory('Photography')">Photography</button>
+
+<button class="filter"
+onclick="filterCategory('DJ & Sound')">DJ</button>
+
+<button class="filter"
+onclick="filterCategory('Tent & Pandal')">Tent</button>
+
+<button class="filter"
+onclick="filterCategory('Car Rental')">Car</button>
+
+</div>
+
+
+<div id="serviceGrid" class="service-grid"></div>
+
+</div>
+</div>
+
+
+<!-- CATEGORIES -->
+
+<div id="categoriesPage" class="page">
+<div class="container">
+
+<div class="section-title">
+<h3>All Categories</h3>
+</div>
+
+<div id="allCategories" class="service-grid"></div>
+
+</div>
+</div>
+
+
+<!-- DEALS -->
+
+<div id="dealsPage" class="page">
+<div class="container">
+
+<div class="section-title">
+<h3>🎁 Wedding Deals</h3>
+</div>
+
+<div id="dealGrid" class="service-grid"></div>
+
+</div>
+</div>
+
+
+<!-- WISHLIST -->
+
+<div id="wishlistPage" class="page">
+<div class="container">
+
+<div class="section-title">
+<h3>♡ Wishlist</h3>
+</div>
+
+<div id="wishlistGrid" class="service-grid"></div>
+
+</div>
+</div>
+
+
+<!-- CART -->
+
+<div id="cartPage" class="page">
+<div class="container">
+
+<div class="section-title">
+<h3>🛒 Booking Cart</h3>
+</div>
+
+<div id="cartGrid"></div>
+
+</div>
+</div>
+
+
+<!-- DETAILS -->
+
+<div id="detailPage" class="page">
+<div class="container">
+
+<button class="back-btn"
+onclick="showPage('homePage')">
+← Back
+</button>
+
+<div id="detailContent"></div>
+
+</div>
+</div>
+
+
+<!-- BOOKING -->
+
+<div id="bookingPage" class="page">
+
+<div class="container">
+
+<button class="back-btn"
+onclick="showPage('detailPage')">
+← Back
+</button>
+
+<div class="form-box">
+
+<h2>Booking Details</h2>
+
+<label>Selected Service</label>
+
+<input id="bookingService" readonly>
+
+
+<label>Event Date</label>
+
+<input id="bookingDate" type="date">
+
+
+<label>Your Name</label>
+
+<input id="customerName"
+placeholder="Enter your name">
+
+
+<label>Mobile Number</label>
+
+<input id="customerPhone"
+type="tel"
+maxlength="10"
+inputmode="numeric"
+placeholder="Enter your 10 digit mobile number">
+
+
+<label>Event Location</label>
+
+<textarea id="eventLocation"
+placeholder="Enter event location"></textarea>
+
+
+<!-- ERROR MESSAGE -->
+
+<div id="bookingMessage"
+class="message-box">
+</div>
+
+
+<button class="confirm-btn"
+onclick="confirmBooking()">
+
+✓ Confirm Booking
+
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- GREEN SUCCESS -->
+
+<div id="successPage"
+class="page success-page">
+
+<div class="success-card">
+
+<div class="success-tick">✓</div>
+
+<h1>WELCOME TO BIYE BAZAR</h1>
+
+<h2>BOOKING CONFIRMED!</h2>
+
+<p>Your booking has been confirmed successfully.</p>
+
+
+<div class="success-info">
+
+<div>
+<span>Booking ID</span>
+<strong id="successId"></strong>
+</div>
+
+<div>
+<span>Service</span>
+<strong id="successService"></strong>
+</div>
+
+<div>
+<span>Date</span>
+<strong id="successDate"></strong>
+</div>
+
+</div>
+
+
+<div class="success-buttons">
+
+<button class="home-success"
+onclick="showPage('homePage')">
+🏠 Home
+</button>
+
+<button class="orders-success"
+onclick="showPage('ordersPage')">
+📦 My Orders
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- MY ORDERS -->
+
+<div id="ordersPage" class="page">
+
+<div class="container">
+
+<div class="section-title">
+<h3>📦 My Orders</h3>
+</div>
+
+<div id="ordersList"></div>
+
+</div>
+</div>
+
+
+<!-- REFER -->
+
+<div id="referPage" class="page">
+
+<div class="container">
+
+<div class="detail-box" style="text-align:center">
+
+<div style="font-size:60px">🎁</div>
+
+<h2>Refer & Earn</h2>
+
+<p style="margin:12px;color:#777">
+Share Biye Bazar with your friends and family.
+</p>
+
+<button class="book" onclick="shareApp()">
+Share Biye Bazar
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- LOCATION -->
+
+<div id="locationPage" class="page">
+
+<div class="container">
+
+<div class="section-title">
+<h3>📍 Select Location</h3>
+</div>
+
+<div class="form-box">
+
+<label>Your Location</label>
+
+<input id="locationInput"
+placeholder="Enter your location">
+
+<button class="confirm-btn"
+onclick="saveLocation()">
+Save Location
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-item active"
+onclick="showPage('homePage',this)">
+<div>🏠</div>
+Home
+</div>
+
+<div class="nav-item"
+onclick="showPage('categoriesPage',this)">
+<div>☰</div>
+Categories
+</div>
+
+<div class="nav-item"
+onclick="showPage('dealsPage',this)">
+<div>🎁</div>
+Deals
+</div>
+
+<div class="nav-item"
+onclick="showPage('ordersPage',this)">
+<div>📦</div>
+My Orders
+</div>
+
+<div class="nav-item"
+onclick="showPage('wishlistPage',this)">
+<div>♡</div>
+Wishlist
+</div>
+
+</div>
+
+
+<script>
+
+/* SERVICE DATA */
+
+const services=[
+
+{
+id:1,
+name:"Premium Wedding Photography",
+category:"Photography",
+icon:"📸",
+price:9999,
+desc:"Wedding photo & video coverage"
+},
+
+{
+id:2,
+name:"Professional DJ & Sound",
+category:"DJ & Sound",
+icon:"🎵",
+price:6999,
+desc:"DJ, speaker & sound system"
+},
+
+{
+id:3,
+name:"Wedding Tent & Pandal",
+category:"Tent & Pandal",
+icon:"⛺",
+price:7999,
+desc:"Beautiful tent and pandal setup"
+},
+
+{
+id:4,
+name:"Wedding Car Rental",
+category:"Car Rental",
+icon:"🚗",
+price:4999,
+desc:"Premium wedding car service"
+},
+
+{
+id:5,
+name:"Wedding Decoration",
+category:"Decoration",
+icon:"🌸",
+price:5999,
+desc:"Stage, flower & venue decoration"
+},
+
+{
+id:6,
+name:"Wedding Catering",
+category:"Catering",
+icon:"🍽️",
+price:8999,
+desc:"Food catering for wedding events"
+},
+
+{
+id:7,
+name:"Wedding Lighting",
+category:"Lighting",
+icon:"💡",
+price:3999,
+desc:"Decorative wedding lighting"
+},
+
+{
+id:8,
+name:"Chair & Table Rental",
+category:"Furniture",
+icon:"🪑",
+price:2999,
+desc:"Wedding chair and table setup"
+},
+
+{
+id:9,
+name:"Bridal Makeup",
+category:"Makeup",
+icon:"💄",
+price:4999,
+desc:"Professional event makeup service"
+}
+
+];
+
+let selectedService=null;
+
+
+/* PAGE */
+
+function showPage(id,element){
+
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+if(element){
+
+document.querySelectorAll(".nav-item")
+.forEach(n=>n.classList.remove("active"));
+
+element.classList.add("active");
+
+}
+
+if(id==="wishlistPage") renderWishlist();
+if(id==="cartPage") renderCart();
+if(id==="ordersPage") renderOrders();
+if(id==="categoriesPage") renderAllCategories();
+if(id==="dealsPage") renderDeals();
+
+window.scrollTo(0,0);
+}
+
+
+/* CARD */
+
+function serviceCard(s){
+
+let list=JSON.parse(
+localStorage.getItem("wishlist")||"[]"
+);
+
+let wished=list.includes(s.id);
+
+return `
+
+<div class="card">
+
+<div class="card-img"
+onclick="openDetails(${s.id})">
+${s.icon}
+</div>
+
+<div class="card-body">
+
+<h4>${s.name}</h4>
+
+<p>${s.desc}</p>
+
+<div class="price">
+₹${s.price.toLocaleString("en-IN")}
+</div>
+
+<button class="book"
+onclick="openBooking(${s.id})">
+Book Now
+</button>
+
+<button class="wish-btn"
+onclick="toggleWishlist(${s.id})">
+
+${wished?"♥ Added":"♡ Wishlist"}
+
+</button>
+
+</div>
+</div>
+
+`;
+}
+
+
+/* HOME */
+
+function renderServices(list=services){
+
+document.getElementById("serviceGrid")
+.innerHTML=list.map(serviceCard).join("");
+
+}
+
+
+/* CATEGORY */
+
+function filterCategory(category){
+
+showPage("homePage");
+
+if(category==="All Services"){
+
+renderServices(services);
+
+}else{
+
+let result=services.filter(
+s=>s.category===category
+);
+
+renderServices(result);
+
+}
+
+window.scrollTo({
+top:300,
+behavior:"smooth"
+});
+
+}
+
+
+/* SEARCH */
+
+function searchServices(){
+
+let q=document
+.getElementById("searchInput")
+.value.toLowerCase();
+
+let result=services.filter(s=>
+s.name.toLowerCase().includes(q) ||
+s.category.toLowerCase().includes(q)
+);
+
+renderServices(result);
+
+}
+
+
+/* DETAILS */
+
+function openDetails(id){
+
+selectedService=
+services.find(s=>s.id===id);
+
+document.getElementById("detailContent")
+.innerHTML=`
+
+<div class="detail-box">
+
+<div class="detail-icon">
+${selectedService.icon}
+</div>
+
+<h2>${selectedService.name}</h2>
+
+<p style="margin:10px 0;color:#777">
+${selectedService.desc}
+</p>
+
+<h2 style="color:#0878e8">
+₹${selectedService.price.toLocaleString("en-IN")}
+</h2>
+
+<p style="margin:10px 0">
+Category: ${selectedService.category}
+</p>
+
+<button class="book"
+onclick="openBooking(${selectedService.id})">
+Book Now
+</button>
+
+</div>
+`;
+
+showPage("detailPage");
+}
+
+
+/* BOOKING */
+
+function openBooking(id){
+
+selectedService=
+services.find(s=>s.id===id);
+
+document.getElementById("bookingService")
+.value=selectedService.name;
+
+clearBookingMessage();
+
+showPage("bookingPage");
+}
+
+
+/* MESSAGE */
+
+function showBookingMessage(text){
+
+const box=
+document.getElementById("bookingMessage");
+
+box.innerText=text;
+
+box.classList.add("show");
+
+box.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+function clearBookingMessage(){
+
+const box=
+document.getElementById("bookingMessage");
+
+box.innerText="";
+
+box.classList.remove("show");
+
+}
+
+
+/* CONFIRM BOOKING */
+
+function confirmBooking(){
+
+clearBookingMessage();
+
+
+const name=
+document.getElementById("customerName")
+.value.trim();
+
+const phone=
+document.getElementById("customerPhone")
+.value.trim();
+
+const date=
+document.getElementById("bookingDate")
+.value;
+
+const location=
+document.getElementById("eventLocation")
+.value.trim();
+
+
+/* EMPTY INFORMATION */
+
+if(!name || !phone || !date || !location){
+
+showBookingMessage(
+"⚠️ আপনার তথ্য সম্পূর্ণ নয়। অনুগ্রহ করে আপনার নাম, সঠিক মোবাইল নম্বর, ইভেন্টের তারিখ এবং ইভেন্টের স্থান ভালোভাবে পূরণ করুন। সব তথ্য ঠিকভাবে পূরণ করে আবার Confirm Booking করুন।"
+);
+
+return;
+}
+
+
+/* WRONG MOBILE */
+
+if(!/^[0-9]{10}$/.test(phone)){
+
+showBookingMessage(
+"⚠️ মোবাইল নম্বর সঠিক নয়। দয়া করে আপনার সঠিক ১০ সংখ্যার মোবাইল নম্বর লিখে আবার চেষ্টা করুন।"
+);
+
+return;
+}
+
+
+/* CORRECT INFORMATION */
+
+const order={
+
+id:"BB"+Date.now().toString().slice(-8),
+
+service:selectedService.name,
+
+serviceId:selectedService.id,
+
+price:selectedService.price,
+
+date:date,
+
+customer:name,
+
+phone:phone,
+
+location:location,
+
+status:"Confirmed"
+
+};
+
+
+let orders=
+JSON.parse(
+localStorage.getItem("orders")||"[]"
+);
+
+orders.unshift(order);
+
+localStorage.setItem(
+"orders",
+JSON.stringify(orders)
+);
+
+
+/* SUCCESS */
+
+document.getElementById("successId")
+.innerText=order.id;
+
+document.getElementById("successService")
+.innerText=order.service;
+
+document.getElementById("successDate")
+.innerText=order.date;
+
+
+/* GREEN CONFIRMATION */
+
+showPage("successPage");
+
+}
+
+
+/* WISHLIST */
+
+function toggleWishlist(id){
+
+let list=
+JSON.parse(
+localStorage.getItem("wishlist")||"[]"
+);
+
+if(list.includes(id)){
+
+list=list.filter(x=>x!==id);
+
+}else{
+
+list.push(id);
+
+}
+
+localStorage.setItem(
+"wishlist",
+JSON.stringify(list)
+);
+
+renderServices();
+
+}
+
+
+/* WISHLIST PAGE */
+
+function renderWishlist(){
+
+let list=
+JSON.parse(
+localStorage.getItem("wishlist")||"[]"
+);
+
+let data=
+services.filter(s=>list.includes(s.id));
+
+let grid=
+document.getElementById("wishlistGrid");
+
+if(!data.length){
+
+grid.innerHTML=
+`<div class="empty">
+♡<br><br>
+Wishlist is empty.
+</div>`;
+
+return;
+}
+
+grid.innerHTML=
+data.map(serviceCard).join("");
+
+}
+
+
+/* CART */
+
+function renderCart(){
+
+let cart=
+JSON.parse(
+localStorage.getItem("cart")||"[]"
+);
+
+let data=
+services.filter(s=>cart.includes(s.id));
+
+let box=
+document.getElementById("cartGrid");
+
+if(!data.length){
+
+box.innerHTML=
+`<div class="empty">
+🛒<br><br>
+Booking cart is empty.
+</div>`;
+
+return;
+}
+
+box.innerHTML=
+data.map(s=>`
+
+<div class="order">
+
+<h3>
+${s.icon} ${s.name}
+</h3>
+
+<div class="order-row">
+${s.desc}
+</div>
+
+<strong>
+₹${s.price.toLocaleString("en-IN")}
+</strong>
+
+<button
+class="book"
+style="margin-top:10px"
+onclick="openBooking(${s.id})">
+Continue Booking
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* ALL CATEGORIES */
+
+function renderAllCategories(){
+
+document.getElementById("allCategories")
+.innerHTML=services.map(serviceCard).join("");
+
+}
+
+
+/* DEALS */
+
+function renderDeals(){
+
+document.getElementById("dealGrid")
+.innerHTML=services.slice(0,6)
+.map(serviceCard).join("");
+
+}
+
+
+/* ORDER STATUS */
+
+function getStatusSteps(status){
+
+const statuses=[
+"Confirmed",
+"Processing",
+"Completed"
+];
+
+let current=
+statuses.indexOf(status);
+
+return statuses.map((s,i)=>`
+
+<div class="status-step
+${i<=current?"active":""}">
+
+<div class="status-circle">
+${i<=current?"✓":i+1}
+</div>
+
+<span>${s}</span>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* MY ORDERS */
+
+function renderOrders(){
+
+let orders=
+JSON.parse(
+localStorage.getItem("orders")||"[]"
+);
+
+let box=
+document.getElementById("ordersList");
+
+if(!orders.length){
+
+box.innerHTML=
+`<div class="empty">
+📦<br><br>
+No bookings yet.
+</div>`;
+
+return;
+}
+
+
+box.innerHTML=
+orders.map(o=>`
+
+<div class="order">
+
+<div class="order-title">
+
+<h3>${o.service}</h3>
+
+<div class="order-id">
+${o.id}
+</div>
+
+</div>
+
+<div class="order-row">
+📅 Date: ${o.date}
+</div>
+
+<div class="order-row">
+👤 Customer: ${o.customer}
+</div>
+
+<div class="order-row">
+📍 Location: ${o.location}
+</div>
+
+<div class="order-row">
+💰 Amount:
+<strong>
+₹${o.price.toLocaleString("en-IN")}
+</strong>
+</div>
+
+
+<div class="order-status">
+
+<div class="status-title">
+Order Status
+</div>
+
+<div class="status-line">
+
+${getStatusSteps(o.status)}
+
+</div>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* LOCATION */
+
+function saveLocation(){
+
+let value=
+document.getElementById("locationInput")
+.value.trim();
+
+if(!value){
+
+alert("Please enter a location.");
+
+return;
+}
+
+localStorage.setItem(
+"location",
+value
+);
+
+document.getElementById("locationText")
+.innerText=value;
+
+showPage("homePage");
+
+}
+
+
+/* SHARE */
+
+function shareApp(){
+
+if(navigator.share){
+
+navigator.share({
+title:"Biye Bazar",
+text:"Biye Bazar - Wedding Services Marketplace"
+});
+
+}else{
+
+alert("Share is not supported here.");
+
+}
+
+}
+
+
+/* CATEGORY SWIPE */
+
+const categoryScroll=
+document.getElementById("categoryScroll");
+
+let dragging=false;
+let startX=0;
+let startScroll=0;
+
+categoryScroll.addEventListener(
+"pointerdown",
+function(e){
+
+dragging=true;
+
+startX=e.clientX;
+
+startScroll=
+categoryScroll.scrollLeft;
+
+categoryScroll.setPointerCapture(
+e.pointerId
+);
+
+}
+);
+
+categoryScroll.addEventListener(
+"pointermove",
+function(e){
+
+if(!dragging)return;
+
+let distance=
+e.clientX-startX;
+
+categoryScroll.scrollLeft=
+startScroll-distance;
+
+}
+);
+
+categoryScroll.addEventListener(
+"pointerup",
+function(){
+
+dragging=false;
+
+}
+);
+
+categoryScroll.addEventListener(
+"pointercancel",
+function(){
+
+dragging=false;
+
+}
+);
+
+
+/* SAVED LOCATION */
+
+let savedLocation=
+localStorage.getItem("location");
+
+if(savedLocation){
+
+document.getElementById("locationText")
+.innerText=savedLocation;
+
+}
+
+
+/* START */
+
+renderServices();
+
+updateCartBadge();
+
+
+/* CART BADGE */
+
+function updateCartBadge(){
+
+let cart=
+JSON.parse(
+localStorage.getItem("cart")||"[]"
+);
+
+document.getElementById("cartBadge")
+.innerText=cart.length;
+
+}
+
+</script>
+
+</body>
+  </html>
